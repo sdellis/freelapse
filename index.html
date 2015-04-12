@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="description" content="boilerplate widget factory">
+<script src="js/jquery-2.1.3.min.js"></script>
+<script type="text/javascript" src="js/jquery.instacam.min.js"></script>
+<link href="css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+
+  <meta charset="utf-8">
+  <title>Freelapse</title>
+</head>
+<body>
+<h2>Save demo</h2>
+				<p>After allowing the webcam in your browser, click record to start recording. <strong>Enjoy!</strong><br/>
+                  <button class="record">record</button>
+<button class="pause">pause</button></p>
+
+				<canvas id="canvas1"></canvas>
+				<br />
+				<form>
+					<div>
+						Format:<label><input type="radio" name="format" value="png" />png</label>
+						<label><input type="radio" name="format" value="jpeg" checked="checked" />jpeg</label>
+						<label><input type="radio" name="format" value="webp" />webp</label>
+					</div>
+					<div class="quality">
+						Quality:<label><input type="radio" name="quality" value="0.1" />poor (0.1)</label>
+						<label><input type="radio" name="quality" value="0.3" />low (0.3)</label>
+						<label><input type="radio" name="quality" value="0.7" checked="checked" />middle (0.7)</label>
+						<label><input type="radio" name="quality" value="1" />good (1)</label>
+					</div>
+					<div>
+						Estimated filesize: <em class="filesize">*</em>
+					</div>
+				</form>
+				<div class="thumb"></div>
+				<blockquote class="log"></blockquote>
+</body>
+
+
+<script>
+$(function() {
+  $('#canvas1').instacam();
+
+  var i = 0;
+  var snapshot;
+
+  function record() {
+    snapshot = setInterval(recording, 500);
+  }
+
+  function recording() {
+    var data = $('#canvas1').data('instacam').save('jpeg', '0.7');
+
+    var thumbnail = document.createElement('img');
+        thumbnail.setAttribute('width', $('#canvas1').instacam('width'));
+        thumbnail.setAttribute('height', $('#canvas1').instacam('height'));
+        thumbnail.setAttribute('src', data);
+        $('.thumb').append(thumbnail);
+  }
+
+  function pause() {
+    clearInterval(snapshot);
+  }
+
+  $(".record").click(function() {
+      record();
+  });
+  $(".pause").click(function() {
+      pause();
+  });
+
+});
+
+</script>
+
+
+
+</html>
