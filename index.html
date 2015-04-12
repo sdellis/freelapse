@@ -43,7 +43,9 @@ $(function() {
   $('#canvas1').instacam();
 
   var i = 0;
+  var index = 1;
   var snapshot;
+  var frames = 0;
 
   function record() {
     snapshot = setInterval(recording, 500);
@@ -52,11 +54,43 @@ $(function() {
   function recording() {
     var data = $('#canvas1').data('instacam').save('jpeg', '0.7');
 
+    frames++;
+
     var thumbnail = document.createElement('img');
+        thumbnail.setAttribute('id', frames);
         thumbnail.setAttribute('width', $('#canvas1').instacam('width'));
         thumbnail.setAttribute('height', $('#canvas1').instacam('height'));
         thumbnail.setAttribute('src', data);
         $('.thumb').append(thumbnail);
+
+  }
+
+  function pause() {
+    clearInterval(snapshot);
+    $('.play').show();
+  }
+
+
+function animate () {
+   setTimeout(function () {
+      console.log(index);
+      if (index <= frames) {
+        var prev = index - 1;
+        if(prev > 0){
+          $( "#" + prev.toString() ).hide();
+        }
+        $( "#" + index.toString() ).show();
+        index++;
+        animate();
+      }
+   }, 500);
+}
+
+
+
+  function play() {
+    $('.thumb').children().hide();
+    animate();
   }
 
   function pause() {
@@ -68,6 +102,10 @@ $(function() {
   });
   $(".pause").click(function() {
       pause();
+      $('.play').show();
+  });
+  $(".play").click(function() {
+      play();
   });
 
 });
