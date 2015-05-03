@@ -36,7 +36,7 @@ $(function() {
   var frames = 0;
 
   function record() {
-    snapshot = setInterval(recording, 60000 * 5);
+    snapshot = setInterval(recording, 60000 );
   }
 
   function recording() {
@@ -85,7 +85,6 @@ function animate () {
   }
 
   $(".record").click(function() {
-  	console.log("record");
       record();
   });
   $(".pause").click(function() {
