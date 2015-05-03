@@ -61,7 +61,6 @@ $(function() {
 
 function animate () {
    setTimeout(function () {
-      console.log(index);
       if (index <= frames) {
         var prev = index - 1;
         if(prev > 0){
@@ -86,6 +85,7 @@ function animate () {
   }
 
   $(".record").click(function() {
+  	console.log("record");
       record();
   });
   $(".pause").click(function() {
